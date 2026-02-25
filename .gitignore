@@ -1,0 +1,12 @@
+# Rust build artifacts (applies to all workspace members)
+target/
+
+# IDEs
+.vscode/
+.idea/
+.d/
+.json/
+
+# OS junk
+.DS_Store
+Thumbs.db
