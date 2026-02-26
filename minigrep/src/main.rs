@@ -1,8 +1,6 @@
 use std::env;
-//module to help us with module reading 
-use std::fs;
 use std::process;
-use std::error::Error;
+use minigrep::Config;
 
 fn main() {
     let args: Vec<String> = env::args().collect(); 
@@ -18,13 +16,8 @@ fn main() {
     println!("Searching for {}", config.query);
     println!("In file {}", config.filename);
 
-    //prebaci ovo u posebnu funkciju
-   // let contents = fs::read_to_string(config.filename).expect("Something went wrong reading the file");
-   //  println!("With text: \n{}", contents);
 
-   // run(config);
-
-   if let Err(e) = run(config){
+   if let Err(e) = minigrep::run(config){
         println!("Application error: {}", e);
         process::exit(1);
    }
@@ -32,35 +25,7 @@ fn main() {
 
 }
 
-fn run(config: Config) -> Result<(), Box<dyn Error>>{
-    let contents = fs::read_to_string(config.filename)?;
 
-    println!("With text: \n{}", contents);
-    Ok(())
-}
-
-
-struct Config{
-    query: String,
-    filename: String,
-}
-
-impl Config{
-    //umesto parse_config nazvacemo je new, to je konvencija za construct functions
- //   fn new(args: &[String]) -> Config{
- //bolje je da se vrati Result koji ce imati opciju da vrati Config ili string ukoliko se desi error
-    fn new(args: &[String]) -> Result<Config, &str>{
-        if args.len() < 3{
-            return Err("not enough arguments");
-        }
-
-        let query =  args[1].clone();
-        let filename = args[2].clone();
-
-        Ok(Config {query, filename})    
-    }
-
-}
 
 /* 
 //args will be reference to the array of strings
