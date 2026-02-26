@@ -25,12 +25,17 @@ struct Config{
 
 impl Config{
     //umesto parse_config nazvacemo je new, to je konvencija za construct functions
-    fn new(args: &[String]) -> Config{
+ //   fn new(args: &[String]) -> Config{
+ //bolje je da se vrati Result koji ce imati opciju da vrati Config ili string ukoliko se desi error
+    fn new(args: &[String]) -> Result<Config, &str>{
+        if args.len() < 3{
+            return Err("not enough arguments");
+        }
 
-    let query =  args[1].clone();
-    let filename = args[2].clone();
+        let query =  args[1].clone();
+        let filename = args[2].clone();
 
-    Config {query, filename}    
+        Ok(Config {query, filename})    
     }
 
 }
