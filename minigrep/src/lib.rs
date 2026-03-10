@@ -50,15 +50,13 @@ impl Config{
 
 }
 
-pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str>{
-    let mut results = Vec::new();
-    for line in contents.lines(){
-        if line.contains(query){
-            results.push(line);
-        }
-    }
 
-    results
+//simplify by using iterator adapter functions
+pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str>{
+    contents  //all lines: contents.lines()
+        .lines()
+        .filter(|line| line.contains(query))   //filter to only the lines that contain our query string
+        .collect()   //return a collection
 }
 
 pub fn search_case_insensitive<'a>(query: &str, contents: &'a str) -> Vec<& 'a str>{
