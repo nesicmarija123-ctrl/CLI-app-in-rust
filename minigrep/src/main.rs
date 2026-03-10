@@ -2,13 +2,41 @@ use std::env;
 use std::process;
 use minigrep::Config;
 
+
+
+/*
+instead of taking an array reference or a slice
+let's take in an iterator which we have overship over
+which also means that we have ownership over it's arguments,
+and that way we can remove this clone() operation
+*/
+
+
+fn main() {
+
+    let config = Config::new(env::args()).unwrap_or_else(|err|{
+        eprintln!("Problem parsing arguments: {}", err);
+        process::exit(1);
+    });
+
+   if let Err(e) = minigrep::run(config){
+        eprintln!("Application error: {}", e);
+        process::exit(1);
+   }
+
+
+}
+
+
+
+/* 
 fn main() {
     let args: Vec<String> = env::args().collect(); 
   
     //let(query, filename) = parse_config(&args);
     //let config = parse_config(&args);
     let config = Config::new(&args).unwrap_or_else(|err|{
-        println!("Problem parsing arguments: {}", err);
+        eprintln!("Problem parsing arguments: {}", err);
         process::exit(1);
     });
 
@@ -18,13 +46,13 @@ fn main() {
 
 
    if let Err(e) = minigrep::run(config){
-        println!("Application error: {}", e);
+        eprintln!("Application error: {}", e);
         process::exit(1);
    }
 
 
 }
-
+*/
 
 
 /* 
